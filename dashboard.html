@@ -1,1 +1,51 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0; url=index.html"><title>AcademiaHub</title></head><body>تم نقل الواجهة إلى <a href="index.html">الصفحة الرئيسية</a>.</body></html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AcademiaHub | لوحة العميل</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=El+Messiri:wght@600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="dashboard-body">
+  <header class="dash-header">
+    <a href="index.html" class="brand mini"><span class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></span><span class="brand-text">Academia<span>Hub</span></span></a>
+    <div class="dash-actions"><button class="ghost-btn" id="backHome">الرئيسية</button><button class="danger-btn" id="logoutBtn">خروج</button></div>
+  </header>
+  <main class="dashboard-layout">
+    <aside class="dash-sidebar">
+      <div class="client-card"><i class="fa-solid fa-user-graduate"></i><h2 id="clientName">مرحباً</h2><p id="clientInfo"></p></div>
+      <nav><a class="active" href="#dashOverview"><i class="fa-solid fa-grid-2"></i> لوحة العميل</a><a href="#dashOrder"><i class="fa-solid fa-file-signature"></i> طلب خدمة</a><a href="#dashRequests"><i class="fa-solid fa-folder-open"></i> طلباتي</a><a href="https://chat.whatsapp.com/DO6CyC5MwajLizwHNkmLHU?mode=gi_t" target="_blank"><i class="fa-brands fa-whatsapp"></i> واتساب</a></nav>
+    </aside>
+    <section class="dash-content">
+      <section class="dash-hero" id="dashOverview">
+        <h1>لوحة تحكم العميل</h1>
+        <p>من هنا يمكنك تقديم طلب جديد، متابعة الطلبات المحفوظة محلياً، والتواصل السريع مع فريق AcademiaHub.</p>
+        <div class="dash-stats"><div><strong id="ordersCount">0</strong><span>طلب محفوظ</span></div><div><strong>24/7</strong><span>متابعة</span></div><div><strong>AH</strong><span>رقم تلقائي</span></div></div>
+      </section>
+      <section class="dash-panel" id="dashOrder">
+        <h2><i class="fa-solid fa-file-signature"></i> طلب خدمة جديدة</h2>
+        <form id="dashOrderForm" class="order-form">
+          <div class="form-grid">
+            <label>الخدمة<select name="service" required id="dashServiceSelect"></select></label>
+            <label>التخصص<input name="major" required placeholder="مثال: إدارة أعمال"></label>
+            <label>المستوى<select name="level" required><option>بكالوريوس</option><option>ماجستير</option><option>دكتوراه</option><option>باحث</option></select></label>
+            <label>موعد التسليم<input type="date" name="deadline"></label>
+          </div>
+          <label>تفاصيل الطلب<textarea name="details" required rows="6" placeholder="صف الخدمة المطلوبة بدقة"></textarea></label>
+          <button class="primary-btn full ripple" type="submit">إرسال الطلب</button>
+        </form>
+      </section>
+      <section class="dash-panel" id="dashRequests">
+        <h2><i class="fa-solid fa-folder-open"></i> طلباتي</h2>
+        <div id="savedOrders" class="saved-orders"></div>
+      </section>
+    </section>
+  </main>
+  <a class="float-whatsapp" href="https://chat.whatsapp.com/DO6CyC5MwajLizwHNkmLHU?mode=gi_t" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i></a>
+  <script src="js/app.js"></script>
+</body>
+</html>
