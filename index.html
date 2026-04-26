@@ -1,129 +1,175 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AcademiaHub | تسجيل الدخول</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=El+Messiri:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AcademiaHub | المنصة الأكاديمية المتكاملة</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=El+Messiri:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="auth-body">
-    
-    <div class="auth-bg">
-        <div class="auth-shape auth-shape-1"></div>
-        <div class="auth-shape auth-shape-2"></div>
-        <div class="auth-shape auth-shape-3"></div>
-    </div>
+<body class="site-body">
+  <div class="ambient-bg"><span></span><span></span><span></span></div>
 
-    <div class="auth-wrapper">
-        <div class="auth-card">
-            <div class="auth-logo">
-                <div class="auth-logo-icon">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <h1>Academia<span>Hub</span></h1>
-                <p>المنصة الأكاديمية الشاملة</p>
-            </div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="AcademiaHub">
+      <span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i></span>
+      <strong>Academia<span>Hub</span></strong>
+    </a>
+    <nav class="top-nav">
+      <a href="#about">عن المنصة</a>
+      <a href="#services">الخدمات</a>
+      <a href="#journals">المجلات</a>
+      <a href="#experts">الخبراء</a>
+      <a href="#library">المكتبة</a>
+      <a href="admin.html" class="admin-link">لوحة المشرف</a>
+    </nav>
+    <button class="mobile-toggle" id="mobileToggle"><i class="fa-solid fa-bars"></i></button>
+  </header>
 
-            <div class="auth-marquee">
-                <div class="marquee-inner">
-                    <span><i class="fa-solid fa-shield-halved"></i> ثقة</span>
-                    <span>•</span>
-                    <span><i class="fa-solid fa-handshake"></i> أمانة</span>
-                    <span>•</span>
-                    <span><i class="fa-solid fa-lock"></i> سرية</span>
-                    <span>•</span>
-                    <span><i class="fa-solid fa-rocket"></i> إنجاز</span>
-                    <span>•</span>
-                    <span><i class="fa-solid fa-bullseye"></i> دقة</span>
-                    <span>•</span>
-                    <span><i class="fa-solid fa-star"></i> جودة</span>
-                    <span>•</span>
-                    <span><i class="fa-solid fa-medal"></i> خبرة</span>
-                    <span>•</span>
-                    <span><i class="fa-solid fa-shield-halved"></i> ثقة</span>
-                    <span>•</span>
-                    <span><i class="fa-solid fa-handshake"></i> أمانة</span>
-                </div>
-            </div>
+  <aside class="service-rail" id="serviceRail">
+    <h3>قائمة الخدمات</h3>
+    <div id="railLinks"></div>
+  </aside>
 
-            <div class="auth-tabs">
-                <button class="auth-tab active" data-tab="login">تسجيل الدخول</button>
-                <button class="auth-tab" data-tab="register">حساب جديد</button>
-            </div>
-
-            <form class="auth-form active" id="loginForm">
-                <div class="input-group">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="email" placeholder="البريد الإلكتروني" required id="loginEmail">
-                </div>
-                <div class="input-group">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="كلمة المرور" required id="loginPassword">
-                </div>
-                <button type="submit" class="auth-btn">
-                    <span>دخول</span>
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
-            </form>
-
-            <form class="auth-form" id="registerForm">
-                <div class="input-row">
-                    <div class="input-group">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" placeholder="الاسم الأول" required id="regFirstName">
-                    </div>
-                    <div class="input-group">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" placeholder="الاسم الأخير" required id="regLastName">
-                    </div>
-                </div>
-                <div class="input-group">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="email" placeholder="البريد الإلكتروني" required id="regEmail">
-                </div>
-                <div class="input-group">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                    <select required id="regLevel">
-                        <option value="">المستوى الأكاديمي</option>
-                        <option value="bachelor">بكالوريوس</option>
-                        <option value="master">ماجستير</option>
-                        <option value="phd">دكتوراه</option>
-                        <option value="researcher">باحث</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <i class="fa-solid fa-bookmark"></i>
-                    <select required id="regSpecialization">
-                        <option value="">التخصص العام</option>
-                        <option value="medical">الطب والعلوم الصحية</option>
-                        <option value="engineering">الهندسة</option>
-                        <option value="science">العلوم الطبيعية</option>
-                        <option value="social">العلوم الاجتماعية</option>
-                        <option value="humanities">العلوم الإنسانية</option>
-                        <option value="business">الإدارة والاقتصاد</option>
-                        <option value="law">القانون</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="كلمة المرور (8 أحرف على الأقل)" required id="regPassword" minlength="8">
-                </div>
-                <div class="input-group">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="تأكيد كلمة المرور" required id="regConfirm">
-                </div>
-                <button type="submit" class="auth-btn">
-                    <span>إنشاء حساب</span>
-                    <i class="fa-solid fa-user-plus"></i>
-                </button>
-            </form>
-
-            <div class="auth-msg" id="authMsg"></div>
+  <main>
+    <section id="home" class="hero section">
+      <div class="hero-copy reveal">
+        <div class="trust-strip">
+          <span><i class="fa-solid fa-shield-halved"></i> سرية</span>
+          <span><i class="fa-solid fa-bolt"></i> سرعة</span>
+          <span><i class="fa-solid fa-medal"></i> جودة</span>
+          <span><i class="fa-solid fa-user-graduate"></i> خبراء</span>
         </div>
-    </div>
+        <h1>منصة أكاديمية متكاملة من الفكرة إلى النشر</h1>
+        <p>يدخل العميل أولاً إلى الصفحة الرئيسية، يستعرض الخدمات والتخصصات والأعمال السابقة، ثم يطلب الخدمة عند الاستعداد. التسجيل أصبح خطوة لاحقة وليست حاجزاً أمام الاستكشاف.</p>
+        <div class="hero-actions">
+          <a href="#services" class="btn primary">استعرض الخدمات <i class="fa-solid fa-arrow-left"></i></a>
+          <a href="#order" class="btn ghost">اطلب الخدمة الآن</a>
+        </div>
+        <div class="hero-metrics">
+          <div><b>12+</b><span>قسم خدمة</span></div>
+          <div><b>80+</b><span>خدمة فرعية</span></div>
+          <div><b>8</b><span>مسارات تخصصية</span></div>
+        </div>
+      </div>
+      <div class="hero-panel reveal">
+        <div class="orb-logo"><i class="fa-solid fa-atom"></i></div>
+        <h2>رحلة طلب ذكية</h2>
+        <ol>
+          <li>استعراض الأقسام والخدمات</li>
+          <li>اختيار الخدمة والتخصص</li>
+          <li>تعبئة نموذج ديناميكي</li>
+          <li>إرسال الطلب عبر البريد أو واتساب</li>
+        </ol>
+      </div>
+    </section>
 
-    <script src="js/app.js"></script>
+    <section id="about" class="section about-grid">
+      <div class="section-head reveal">
+        <span>نبذة عنا</span>
+        <h2>واجهة عامة جذابة قبل تسجيل الدخول</h2>
+        <p>المنصة الآن تقدم نفسها للعميل بوضوح: ماذا نقدم، كيف نعمل، ما التخصصات المتاحة، وما خطوات الطلب. هذا يزيد الثقة ويقلل خروج الزائر المبكر.</p>
+      </div>
+      <div class="feature-cards" id="featuresGrid"></div>
+    </section>
+
+    <section id="services" class="section">
+      <div class="section-head reveal">
+        <span>الخدمات</span>
+        <h2>أقسام أكاديمية وبرمجية متكاملة</h2>
+        <p>كل قسم يحتوي على خدمات فرعية، صور، لون خاص، وزر طلب مباشر ينقل العميل إلى نموذج مناسب للخدمة.</p>
+      </div>
+      <div class="service-filter" id="serviceFilter"></div>
+      <div class="services-grid" id="servicesGrid"></div>
+    </section>
+
+    <section id="specializations" class="section alt">
+      <div class="section-head reveal">
+        <span>التخصصات</span>
+        <h2>تخصصات وفروع قابلة للتوسعة من لوحة المشرف</h2>
+      </div>
+      <div class="spec-grid" id="specGrid"></div>
+    </section>
+
+    <section id="journals" class="section">
+      <div class="section-head reveal">
+        <span>النشر المحلي والدولي</span>
+        <h2>بوابات ومجلات منظمة حسب الدولة والتخصص</h2>
+        <p>أضفت هيكلاً جاهزاً للمجلات والبوابات، ويمكنك من لوحة المشرف تعديل الأسماء والشعارات والروابط والأرقام الدولية.</p>
+      </div>
+      <div class="portal-row" id="portalRow"></div>
+      <div class="journal-controls">
+        <select id="journalCountry"></select>
+        <select id="journalField"></select>
+      </div>
+      <div class="journal-grid" id="journalGrid"></div>
+    </section>
+
+    <section id="experts" class="section alt">
+      <div class="section-head reveal">
+        <span>الخبراء</span>
+        <h2>خبراء لكل تخصص مع بطاقات تعريفية</h2>
+      </div>
+      <div class="experts-grid" id="expertsGrid"></div>
+    </section>
+
+    <section id="works" class="section">
+      <div class="section-head reveal">
+        <span>الأعمال السابقة</span>
+        <h2>معرض أعمال قابل للإدارة</h2>
+        <p>استخدمت أعمالاً تجريبية قابلة للاستبدال من لوحة التحكم. لم أضع ملفات من مصادر خارجية مخفية حتى لا تتعرض المنصة لمشكلة حقوق نشر.</p>
+      </div>
+      <div class="works-grid" id="worksGrid"></div>
+    </section>
+
+    <section id="library" class="section alt">
+      <div class="section-head reveal">
+        <span>المكتبة والقوالب</span>
+        <h2>قوالب جاهزة ومسارات تحميل منظمة</h2>
+      </div>
+      <div class="library-grid" id="libraryGrid"></div>
+    </section>
+
+    <section id="order" class="section order-section">
+      <div class="order-card reveal">
+        <div>
+          <span class="mini-label">اطلب الخدمة</span>
+          <h2>ما الذي تحتاج المساعدة فيه؟</h2>
+          <p>بعد اختيار الخدمة، يتم توجيه العميل لتسجيل الدخول أو إنشاء حساب، ثم يظهر نموذج مخصص يحتوي على أسئلة تفصيلية حسب نوع الخدمة.</p>
+        </div>
+        <button class="btn primary" onclick="openOrderModal()">ابدأ نموذج الطلب <i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="orderModal" aria-hidden="true">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeOrderModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h2>تسجيل / إنشاء حساب لطلب الخدمة</h2>
+      <p class="muted">هذه الخطوة تظهر فقط عند رغبة العميل في الطلب.</p>
+      <div class="auth-mini">
+        <input id="clientName" placeholder="الاسم الكامل">
+        <input id="clientEmail" type="email" placeholder="البريد الإلكتروني">
+        <input id="clientPhone" placeholder="رقم الواتساب">
+      </div>
+      <form id="orderForm" class="smart-form">
+        <select id="orderSection" required></select>
+        <select id="orderService" required></select>
+        <select id="orderSpec" required></select>
+        <input id="orderTitle" placeholder="عنوان البحث أو فكرة المشروع">
+        <textarea id="orderDetails" placeholder="اشرح المطلوب بدقة: المرحلة، الموعد، عدد الصفحات، الملفات المتوفرة، شروط الجامعة أو المجلة..."></textarea>
+        <div id="dynamicQuestions" class="dynamic-questions"></div>
+        <div class="form-actions">
+          <button type="submit" class="btn primary">إرسال الطلب</button>
+          <a id="whatsappLink" class="btn whatsapp" target="_blank" rel="noopener">إرسال عبر واتساب</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <a class="floating-whatsapp" href="https://wa.me/" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i></a>
+
+  <script src="js/app.js"></script>
 </body>
 </html>
