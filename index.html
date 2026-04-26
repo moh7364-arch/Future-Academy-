@@ -1,175 +1,473 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AcademiaHub | المنصة الأكاديمية المتكاملة</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=El+Messiri:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AcademiaHub - منصتك الأكاديمية الشاملة لجميع خدمات البحث العلمي. رسائل ماجستير، دكتوراه، نشر علمي، ترجمة، تحليل إحصائي">
+    <meta name="keywords" content="رسائل ماجستير, دكتوراه, نشر علمي, ترجمة أكاديمية, تحليل إحصائي, فحص اقتباس, مشاريع تخرج, Scopus, مجلات علمية">
+    <title>AcademiaHub | المنصة الأكاديمية الشاملة</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800&family=El+Messiri:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="site-body">
-  <div class="ambient-bg"><span></span><span></span><span></span></div>
+<body class="public-body">
 
-  <header class="site-header">
-    <a class="brand" href="#home" aria-label="AcademiaHub">
-      <span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i></span>
-      <strong>Academia<span>Hub</span></strong>
-    </a>
-    <nav class="top-nav">
-      <a href="#about">عن المنصة</a>
-      <a href="#services">الخدمات</a>
-      <a href="#journals">المجلات</a>
-      <a href="#experts">الخبراء</a>
-      <a href="#library">المكتبة</a>
-      <a href="admin.html" class="admin-link">لوحة المشرف</a>
-    </nav>
-    <button class="mobile-toggle" id="mobileToggle"><i class="fa-solid fa-bars"></i></button>
-  </header>
-
-  <aside class="service-rail" id="serviceRail">
-    <h3>قائمة الخدمات</h3>
-    <div id="railLinks"></div>
-  </aside>
-
-  <main>
-    <section id="home" class="hero section">
-      <div class="hero-copy reveal">
-        <div class="trust-strip">
-          <span><i class="fa-solid fa-shield-halved"></i> سرية</span>
-          <span><i class="fa-solid fa-bolt"></i> سرعة</span>
-          <span><i class="fa-solid fa-medal"></i> جودة</span>
-          <span><i class="fa-solid fa-user-graduate"></i> خبراء</span>
+    <!-- ═══════════════ PRELOADER ═══════════════ -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Academia<span>Hub</span></span>
+            </div>
+            <div class="preloader-bar"><div class="preloader-fill"></div></div>
         </div>
-        <h1>منصة أكاديمية متكاملة من الفكرة إلى النشر</h1>
-        <p>يدخل العميل أولاً إلى الصفحة الرئيسية، يستعرض الخدمات والتخصصات والأعمال السابقة، ثم يطلب الخدمة عند الاستعداد. التسجيل أصبح خطوة لاحقة وليست حاجزاً أمام الاستكشاف.</p>
-        <div class="hero-actions">
-          <a href="#services" class="btn primary">استعرض الخدمات <i class="fa-solid fa-arrow-left"></i></a>
-          <a href="#order" class="btn ghost">اطلب الخدمة الآن</a>
-        </div>
-        <div class="hero-metrics">
-          <div><b>12+</b><span>قسم خدمة</span></div>
-          <div><b>80+</b><span>خدمة فرعية</span></div>
-          <div><b>8</b><span>مسارات تخصصية</span></div>
-        </div>
-      </div>
-      <div class="hero-panel reveal">
-        <div class="orb-logo"><i class="fa-solid fa-atom"></i></div>
-        <h2>رحلة طلب ذكية</h2>
-        <ol>
-          <li>استعراض الأقسام والخدمات</li>
-          <li>اختيار الخدمة والتخصص</li>
-          <li>تعبئة نموذج ديناميكي</li>
-          <li>إرسال الطلب عبر البريد أو واتساب</li>
-        </ol>
-      </div>
-    </section>
-
-    <section id="about" class="section about-grid">
-      <div class="section-head reveal">
-        <span>نبذة عنا</span>
-        <h2>واجهة عامة جذابة قبل تسجيل الدخول</h2>
-        <p>المنصة الآن تقدم نفسها للعميل بوضوح: ماذا نقدم، كيف نعمل، ما التخصصات المتاحة، وما خطوات الطلب. هذا يزيد الثقة ويقلل خروج الزائر المبكر.</p>
-      </div>
-      <div class="feature-cards" id="featuresGrid"></div>
-    </section>
-
-    <section id="services" class="section">
-      <div class="section-head reveal">
-        <span>الخدمات</span>
-        <h2>أقسام أكاديمية وبرمجية متكاملة</h2>
-        <p>كل قسم يحتوي على خدمات فرعية، صور، لون خاص، وزر طلب مباشر ينقل العميل إلى نموذج مناسب للخدمة.</p>
-      </div>
-      <div class="service-filter" id="serviceFilter"></div>
-      <div class="services-grid" id="servicesGrid"></div>
-    </section>
-
-    <section id="specializations" class="section alt">
-      <div class="section-head reveal">
-        <span>التخصصات</span>
-        <h2>تخصصات وفروع قابلة للتوسعة من لوحة المشرف</h2>
-      </div>
-      <div class="spec-grid" id="specGrid"></div>
-    </section>
-
-    <section id="journals" class="section">
-      <div class="section-head reveal">
-        <span>النشر المحلي والدولي</span>
-        <h2>بوابات ومجلات منظمة حسب الدولة والتخصص</h2>
-        <p>أضفت هيكلاً جاهزاً للمجلات والبوابات، ويمكنك من لوحة المشرف تعديل الأسماء والشعارات والروابط والأرقام الدولية.</p>
-      </div>
-      <div class="portal-row" id="portalRow"></div>
-      <div class="journal-controls">
-        <select id="journalCountry"></select>
-        <select id="journalField"></select>
-      </div>
-      <div class="journal-grid" id="journalGrid"></div>
-    </section>
-
-    <section id="experts" class="section alt">
-      <div class="section-head reveal">
-        <span>الخبراء</span>
-        <h2>خبراء لكل تخصص مع بطاقات تعريفية</h2>
-      </div>
-      <div class="experts-grid" id="expertsGrid"></div>
-    </section>
-
-    <section id="works" class="section">
-      <div class="section-head reveal">
-        <span>الأعمال السابقة</span>
-        <h2>معرض أعمال قابل للإدارة</h2>
-        <p>استخدمت أعمالاً تجريبية قابلة للاستبدال من لوحة التحكم. لم أضع ملفات من مصادر خارجية مخفية حتى لا تتعرض المنصة لمشكلة حقوق نشر.</p>
-      </div>
-      <div class="works-grid" id="worksGrid"></div>
-    </section>
-
-    <section id="library" class="section alt">
-      <div class="section-head reveal">
-        <span>المكتبة والقوالب</span>
-        <h2>قوالب جاهزة ومسارات تحميل منظمة</h2>
-      </div>
-      <div class="library-grid" id="libraryGrid"></div>
-    </section>
-
-    <section id="order" class="section order-section">
-      <div class="order-card reveal">
-        <div>
-          <span class="mini-label">اطلب الخدمة</span>
-          <h2>ما الذي تحتاج المساعدة فيه؟</h2>
-          <p>بعد اختيار الخدمة، يتم توجيه العميل لتسجيل الدخول أو إنشاء حساب، ثم يظهر نموذج مخصص يحتوي على أسئلة تفصيلية حسب نوع الخدمة.</p>
-        </div>
-        <button class="btn primary" onclick="openOrderModal()">ابدأ نموذج الطلب <i class="fa-solid fa-paper-plane"></i></button>
-      </div>
-    </section>
-  </main>
-
-  <div class="modal" id="orderModal" aria-hidden="true">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeOrderModal()"><i class="fa-solid fa-xmark"></i></button>
-      <h2>تسجيل / إنشاء حساب لطلب الخدمة</h2>
-      <p class="muted">هذه الخطوة تظهر فقط عند رغبة العميل في الطلب.</p>
-      <div class="auth-mini">
-        <input id="clientName" placeholder="الاسم الكامل">
-        <input id="clientEmail" type="email" placeholder="البريد الإلكتروني">
-        <input id="clientPhone" placeholder="رقم الواتساب">
-      </div>
-      <form id="orderForm" class="smart-form">
-        <select id="orderSection" required></select>
-        <select id="orderService" required></select>
-        <select id="orderSpec" required></select>
-        <input id="orderTitle" placeholder="عنوان البحث أو فكرة المشروع">
-        <textarea id="orderDetails" placeholder="اشرح المطلوب بدقة: المرحلة، الموعد، عدد الصفحات، الملفات المتوفرة، شروط الجامعة أو المجلة..."></textarea>
-        <div id="dynamicQuestions" class="dynamic-questions"></div>
-        <div class="form-actions">
-          <button type="submit" class="btn primary">إرسال الطلب</button>
-          <a id="whatsappLink" class="btn whatsapp" target="_blank" rel="noopener">إرسال عبر واتساب</a>
-        </div>
-      </form>
     </div>
-  </div>
 
-  <a class="floating-whatsapp" href="https://wa.me/" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i></a>
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header class="public-header" id="publicHeader">
+        <div class="header-container">
+            <div class="header-logo">
+                <div class="logo-animated">
+                    <i class="fa-solid fa-graduation-cap logo-icon-main"></i>
+                    <i class="fa-solid fa-book-open logo-icon-sub"></i>
+                    <i class="fa-solid fa-pen-fancy logo-icon-pen"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Academia<span>Hub</span></h1>
+                    <span>المنصة الأكاديمية الشاملة</span>
+                </div>
+            </div>
 
-  <script src="js/app.js"></script>
+            <!-- شعار متحرك ترحيبي -->
+            <div class="header-marquee">
+                <div class="marquee-track">
+                    <span class="marquee-item"><i class="fa-solid fa-shield-halved"></i> ثقة</span>
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-handshake"></i> أمانة</span>
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-lock"></i> سرية تامة</span>
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-rocket"></i> إنجاز</span>
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-bullseye"></i> دقة</span>
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-star"></i> جودة عالية</span>
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-clock"></i> التزام</span>
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-medal"></i> خبرة</span>
+                    <!-- تكرار -->
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-shield-halved"></i> ثقة</span>
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-handshake"></i> أمانة</span>
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-lock"></i> سرية تامة</span>
+                    <span class="marquee-diamond">◆</span>
+                    <span class="marquee-item"><i class="fa-solid fa-rocket"></i> إنجاز</span>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <button class="btn-auth-header" onclick="openAuthModal('login')">
+                    <i class="fa-solid fa-right-to-bracket"></i> دخول
+                </button>
+                <button class="btn-auth-header btn-auth-primary" onclick="openAuthModal('register')">
+                    <i class="fa-solid fa-user-plus"></i> حساب جديد
+                </button>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ═══════════════ SIDEBAR ═══════════════ -->
+    <aside class="public-sidebar" id="publicSidebar">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="sidebar-content">
+            <div class="sidebar-close" id="sidebarClose"><i class="fa-solid fa-xmark"></i></div>
+            <div class="sidebar-search">
+                <input type="text" placeholder="ابحث عن خدمة..." id="sidebarSearch">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="#home" class="sidebar-menu-item active" data-section="home">
+                    <i class="fa-solid fa-house"></i> الرئيسية
+                </a>
+                <div class="menu-divider"></div>
+                <div class="menu-category">الخدمات الأكاديمية</div>
+                <a href="#section-thesis" class="sidebar-menu-item" data-section="thesis">
+                    <i class="fa-solid fa-file-pen"></i> رسائل الماجستير والدكتوراه
+                </a>
+                <a href="#section-memo" class="sidebar-menu-item" data-section="memo">
+                    <i class="fa-solid fa-note-sticky"></i> مذكرات التخرج
+                </a>
+                <a href="#section-graduation" class="sidebar-menu-item" data-section="graduation">
+                    <i class="fa-solid fa-graduation-cap"></i> مشاريع التخرج
+                </a>
+                <a href="#section-papers" class="sidebar-menu-item" data-section="papers">
+                    <i class="fa-solid fa-newspaper"></i> الأوراق البحثية والمقالات
+                </a>
+                <a href="#section-publishing" class="sidebar-menu-item" data-section="publishing">
+                    <i class="fa-solid fa-globe"></i> النشر الدولي والمحلي
+                </a>
+                <a href="#section-translation" class="sidebar-menu-item" data-section="translation">
+                    <i class="fa-solid fa-language"></i> الترجمة وفحص الاقتباس
+                </a>
+                <a href="#section-statistics" class="sidebar-menu-item" data-section="statistics">
+                    <i class="fa-solid fa-chart-pie"></i> التحليل الإحصائي
+                </a>
+                <a href="#section-programming" class="sidebar-menu-item" data-section="programming">
+                    <i class="fa-solid fa-code"></i> البرمجة والتطوير
+                </a>
+                <div class="menu-divider"></div>
+                <div class="menu-category">المجتمع والمعرفة</div>
+                <a href="#section-experts" class="sidebar-menu-item" data-section="experts">
+                    <i class="fa-solid fa-user-tie"></i> خبراؤنا
+                </a>
+                <a href="#section-portfolio" class="sidebar-menu-item" data-section="portfolio">
+                    <i class="fa-solid fa-briefcase"></i> أعمال سابقة
+                </a>
+                <a href="#section-library" class="sidebar-menu-item" data-section="library">
+                    <i class="fa-solid fa-book-open"></i> المكتبة والقوالب
+                </a>
+                <div class="menu-divider"></div>
+                <a href="#" class="sidebar-menu-item cta-item" onclick="scrollToCTA()">
+                    <i class="fa-solid fa-paper-plane"></i> اطلب خدمتك الآن
+                </a>
+            </nav>
+            <div class="sidebar-contact">
+                <a href="https://chat.whatsapp.com/DO6CyC5MwajLizwHNkmLHU?mode=gi_t" target="_blank" class="sidebar-contact-btn wa-btn">
+                    <i class="fa-brands fa-whatsapp"></i> واتساب
+                </a>
+                <a href="mailto:scottmcnamara316@gmail.com" class="sidebar-contact-btn email-btn">
+                    <i class="fa-solid fa-envelope"></i> إيميل
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <main class="public-main" id="publicMain">
+        
+        <!-- ══════════ SECTION: HOME ══════════ -->
+        <section class="pub-section active" id="section-home">
+            <!-- Hero -->
+            <div class="hero-banner">
+                <div class="hero-particles" id="heroParticles"></div>
+                <div class="hero-content">
+                    <div class="hero-badge" data-aos="fade-down">🎓 المنصة الأكاديمية الأولى</div>
+                    <h2 data-aos="fade-up" data-aos-delay="100">شريكك الأمثل في <span>رحلتك الأكاديمية</span></h2>
+                    <p data-aos="fade-up" data-aos-delay="200">نقدم خدمات أكاديمية متكاملة للباحثين وطلاب الدراسات العليا في جميع التخصصات</p>
+                    <div class="hero-buttons" data-aos="fade-up" data-aos-delay="300">
+                        <button class="hero-btn primary" onclick="scrollToCTA()">
+                            <i class="fa-solid fa-rocket"></i> اطلب خدمتك الآن
+                        </button>
+                        <button class="hero-btn outline" onclick="document.getElementById('section-services').scrollIntoView({behavior:'smooth'})">
+                            <i class="fa-solid fa-layer-group"></i> استكشف خدماتنا
+                        </button>
+                    </div>
+                    <div class="hero-stats-row" data-aos="fade-up" data-aos-delay="400">
+                        <div class="hero-stat"><b>+500</b><span>مشروع مكتمل</span></div>
+                        <div class="hero-stat"><b>+30</b><span>خبير متخصص</span></div>
+                        <div class="hero-stat"><b>+15</b><span>دولة</span></div>
+                        <div class="hero-stat"><b>98%</b><span>رضا العملاء</span></div>
+                    </div>
+                </div>
+                <div class="hero-waves">
+                    <svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="var(--bg)" d="M0,60 C360,120 720,0 1440,60 L1440,120 L0,120 Z"></path></svg>
+                </div>
+            </div>
+
+            <!-- About -->
+            <div class="about-section" id="section-services">
+                <div class="container">
+                    <div class="section-header" data-aos="fade-up">
+                        <span class="section-tag">من نحن</span>
+                        <h3>لماذا <span>AcademiaHub</span>؟</h3>
+                        <p>نجمع بين الخبرة الأكاديمية والاحترافية لنقدم لك تجربة فريدة في البحث العلمي</p>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#3B82F6,#1D4ED8)"><i class="fa-solid fa-user-graduate"></i></div>
+                            <h4>خبراء متخصصون</h4>
+                            <p>فريق من حملة الدكتوراه في جميع التخصصات من مختلف الدول العربية والعالمية</p>
+                        </div>
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#10B981,#059669)"><i class="fa-solid fa-lock"></i></div>
+                            <h4>سرية تامة</h4>
+                            <p>نضمن خصوصية بحثك وبياناتك ولا نشاركها مع أي طرف ثالث</p>
+                        </div>
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706)"><i class="fa-solid fa-clock"></i></div>
+                            <h4>التزام بالمواعيد</h4>
+                            <p>نسلم العمل في الوقت المحدد دون تأخير مع إمكانية التسليم العاجل</p>
+                        </div>
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9)"><i class="fa-solid fa-headset"></i></div>
+                            <h4>دعم متواصل</h4>
+                            <p>فريق دعم متاح للتواصل والمتابعة على مدار الساعة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Specializations -->
+            <div class="specs-section">
+                <div class="container">
+                    <div class="section-header" data-aos="fade-up">
+                        <span class="section-tag">التخصصات</span>
+                        <h3>جميع <span>التخصصات والفروع</span></h3>
+                        <p>نغطي جميع التخصصات الأكاديمية بفروعها الدقيقة</p>
+                    </div>
+                    <div class="specs-grid-main" id="specsGridMain"></div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-section" id="ctaSection">
+                <div class="cta-glow"></div>
+                <div class="container">
+                    <div class="cta-content" data-aos="zoom-in">
+                        <i class="fa-solid fa-paper-plane cta-icon"></i>
+                        <h3>هل أنت مستعد للبدء؟</h3>
+                        <p>اختر الخدمة التي تحتاجها ودعنا نساعدك في تحقيق أهدافك الأكاديمية</p>
+                        <button class="cta-btn" onclick="openAuthModal('register')">
+                            <i class="fa-solid fa-rocket"></i> ابدأ الآن - أنشئ حسابك
+                        </button>
+                        <span class="cta-or">أو</span>
+                        <button class="cta-btn cta-btn-outline" onclick="openAuthModal('login')">
+                            <i class="fa-solid fa-right-to-bracket"></i> لدي حساب بالفعل
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: THESIS ══════════ -->
+        <section class="pub-section" id="section-thesis">
+            <div class="section-banner" style="background:linear-gradient(135deg,#1E3A5F,#2563EB)">
+                <div class="container">
+                    <i class="fa-solid fa-file-pen section-banner-icon"></i>
+                    <h2>خدمات رسائل الماجستير والدكتوراه</h2>
+                    <p>مساعدة أكاديمية متكاملة في جميع مراحل البحث العلمي</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="services-list-grid" id="thesisServicesGrid"></div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: MEMO ══════════ -->
+        <section class="pub-section" id="section-memo">
+            <div class="section-banner" style="background:linear-gradient(135deg,#0F766E,#14B8A6)">
+                <div class="container">
+                    <i class="fa-solid fa-note-sticky section-banner-icon"></i>
+                    <h2>خدمات مذكرات التخرج</h2>
+                    <p>مساعدة في إعداد مذكرات التخرج لجميع المستويات</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="services-list-grid" id="memoServicesGrid"></div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: GRADUATION ══════════ -->
+        <section class="pub-section" id="section-graduation">
+            <div class="section-banner" style="background:linear-gradient(135deg,#9A3412,#F97316)">
+                <div class="container">
+                    <i class="fa-solid fa-graduation-cap section-banner-icon"></i>
+                    <h2>خدمات مشاريع التخرج</h2>
+                    <p>دعم متكامل لمشاريع التخرج في جميع التخصصات</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="services-list-grid" id="gradServicesGrid"></div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: PAPERS ══════════ -->
+        <section class="pub-section" id="section-papers">
+            <div class="section-banner" style="background:linear-gradient(135deg,#6D28D9,#8B5CF6)">
+                <div class="container">
+                    <i class="fa-solid fa-newspaper section-banner-icon"></i>
+                    <h2>الأوراق البحثية والمقالات العلمية</h2>
+                    <p>كتابة وتحرير الأوراق البحثية والمقالات العلمية للنشر</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="services-list-grid" id="papersServicesGrid"></div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: PUBLISHING ══════════ -->
+        <section class="pub-section" id="section-publishing">
+            <div class="section-banner" style="background:linear-gradient(135deg,#075985,#0284C7)">
+                <div class="container">
+                    <i class="fa-solid fa-globe section-banner-icon"></i>
+                    <h2>النشر الدولي والمحلي</h2>
+                    <p>نساعدك في نشر بحثك في أفضل المجلات العالمية والمحلية</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="services-list-grid" id="pubServicesGrid"></div>
+                
+                <!-- قسم المجلات -->
+                <div class="journals-world-section" id="journalsWorldSection"></div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: TRANSLATION ══════════ -->
+        <section class="pub-section" id="section-translation">
+            <div class="section-banner" style="background:linear-gradient(135deg,#B45309,#D97706)">
+                <div class="container">
+                    <i class="fa-solid fa-language section-banner-icon"></i>
+                    <h2>الترجمة وفحص الاقتباس</h2>
+                    <p>ترجمة أكاديمية احترافية وفحص دقيق لنسبة الاقتباس</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="services-list-grid" id="transServicesGrid"></div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: STATISTICS ══════════ -->
+        <section class="pub-section" id="section-statistics">
+            <div class="section-banner" style="background:linear-gradient(135deg,#831843,#BE185D)">
+                <div class="container">
+                    <i class="fa-solid fa-chart-pie section-banner-icon"></i>
+                    <h2>التحليل الإحصائي</h2>
+                    <p>تحليل احترافي للبيانات باستخدام أحدث البرامج الإحصائية</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="services-list-grid" id="statsServicesGrid"></div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: PROGRAMMING ══════════ -->
+        <section class="pub-section" id="section-programming">
+            <div class="section-banner" style="background:linear-gradient(135deg,#1E293B,#334155)">
+                <div class="container">
+                    <i class="fa-solid fa-code section-banner-icon"></i>
+                    <h2>البرمجة والتطوير</h2>
+                    <p>حلول برمجية متكاملة للباحثين والطلاب</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="services-list-grid" id="progServicesGrid"></div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: EXPERTS ══════════ -->
+        <section class="pub-section" id="section-experts">
+            <div class="section-banner" style="background:linear-gradient(135deg,#064E3B,#059669)">
+                <div class="container">
+                    <i class="fa-solid fa-user-tie section-banner-icon"></i>
+                    <h2>خبراؤنا</h2>
+                    <p>نخبة من الخبراء المتخصصين من مختلف دول العالم</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="experts-filter-bar">
+                    <select id="expertFilterCategory"><option value="all">جميع التخصصات</option></select>
+                    <input type="text" placeholder="ابحث عن خبير..." id="expertSearchInput">
+                </div>
+                <div class="experts-grid-full" id="expertsGridFull"></div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: PORTFOLIO ══════════ -->
+        <section class="pub-section" id="section-portfolio">
+            <div class="section-banner" style="background:linear-gradient(135deg,#4C1D95,#7C3AED)">
+                <div class="container">
+                    <i class="fa-solid fa-briefcase section-banner-icon"></i>
+                    <h2>أعمال سابقة</h2>
+                    <p>نماذج من أعمالنا السابقة في مختلف المجالات</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="portfolio-grid" id="portfolioGrid"></div>
+            </div>
+        </section>
+
+        <!-- ══════════ SECTION: LIBRARY ══════════ -->
+        <section class="pub-section" id="section-library">
+            <div class="section-banner" style="background:linear-gradient(135deg,#0F172A,#1E3A5F)">
+                <div class="container">
+                    <i class="fa-solid fa-book-open section-banner-icon"></i>
+                    <h2>المكتبة والقوالب</h2>
+                    <p>قوالب أكاديمية جاهزة للتحميل المباشر</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="library-grid-full" id="libraryGridFull"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════ MODAL: AUTH ═══════════════ -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-container">
+            <button class="modal-close-btn" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="auth-modal-content" id="authModalContent"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ WHATSAPP FLOAT ═══════════════ -->
+    <a href="https://chat.whatsapp.com/DO6CyC5MwajLizwHNkmLHU?mode=gi_t" target="_blank" class="wa-float">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="wa-tooltip">تواصل معنا</span>
+    </a>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="public-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Academia<span>Hub</span></span>
+                    </div>
+                    <p>منصتك الأكاديمية الشاملة لجميع خدمات البحث العلمي والدراسات العليا</p>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <a href="#section-thesis">رسائل الماجستير والدكتوراه</a>
+                    <a href="#section-publishing">النشر الدولي والمحلي</a>
+                    <a href="#section-experts">خبراؤنا</a>
+                    <a href="#section-library">المكتبة والقوالب</a>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <a href="https://chat.whatsapp.com/DO6CyC5MwajLizwHNkmLHU?mode=gi_t" target="_blank"><i class="fa-brands fa-whatsapp"></i> واتساب</a>
+                    <a href="mailto:scottmcnamara316@gmail.com"><i class="fa-solid fa-envelope"></i> scottmcnamara316@gmail.com</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 AcademiaHub. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
 </body>
-</html>
+              </html>
