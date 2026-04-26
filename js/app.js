@@ -1,662 +1,79 @@
-/* ══════════════════════════════════════
-   AcademiaHub - Public Platform Logic
-   ══════════════════════════════════════ */
-
-// ═══════════════ STATE ═══════════════
-const STATE = {
-    currentSection: 'home',
-    sidebarOpen: false,
-    user: null
-};
-
-// ═══════════════ INIT ═══════════════
-document.addEventListener('DOMContentLoaded', () => {
-    initPreloader();
-    initHeaderScroll();
-    initSidebar();
-    initMobileMenu();
-    initHeroParticles();
-    initAOS();
-    loadSpecsGrid();
-    loadAllServiceSections();
-    loadJournalsSection();
-    loadExpertsSection();
-    loadPortfolioSection();
-    loadLibrarySection();
-    initSectionNavigation();
-    initSidebarSearch();
-    initSmoothScroll();
-    initWhatsAppFloat();
-    initFooterYear();
-    checkExistingSession();
-    console.log('✅ AcademiaHub Public Platform Ready');
-    console.log('📧 Email: scottmcnamara316@gmail.com');
-    console.log('📱 WhatsApp Group Ready');
-    console.log('👥 Experts:', EXPERTS.length);
-    console.log('📚 Library:', LIBRARY.length);
-    console.log('📄 Portfolio:', PORTFOLIO.length);
-});
-
-// ═══════════════ PRELOADER ═══════════════
-function initPreloader() {
-    setTimeout(() => {
-        const loader = document.getElementById('preloader');
-        if (loader) loader.classList.add('hidden');
-    }, 1200);
+(function(){
+'use strict';
+const EMAIL='scottmcnamara316@gmail.com';
+const WA='https://chat.whatsapp.com/DO6CyC5MwajLizwHNkmLHU?mode=gi_t';
+const $=(s,c=document)=>c.querySelector(s); const $$=(s,c=document)=>Array.from(c.querySelectorAll(s));
+function iconFallback(el){ if(el && el.parentElement){ el.parentElement.innerHTML='<i class="fa-solid fa-book-open"></i>'; } }
+window.iconFallback=iconFallback;
+const nav=[['home','الرئيسية','fa-house'],['masters','رسائل الماجستير والدكتوراه','fa-user-graduate'],['graduation-notes','مذكرات التخرج','fa-book'],['graduation-projects','مشاريع التخرج','fa-diagram-project'],['papers','الأوراق البحثية والمقالات','fa-file-lines'],['publishing','النشر الدولي والمحلي','fa-newspaper'],['translation','الترجمة وفحص الاقتباس','fa-language'],['statistics','التحليل الإحصائي','fa-chart-pie'],['programming','البرمجة والتطوير','fa-code'],['experts','خبراؤنا','fa-users'],['portfolio','أعمال سابقة','fa-briefcase'],['templates','المكتبة والقوالب','fa-folder-open'],['order-now','اطلب خدمتك الآن','fa-paper-plane']];
+const features=[['fa-shield-halved','سرية كاملة','حماية بيانات العميل وتفاصيل المشروع، مع نماذج منظمة لتقليل الأخطاء.'],['fa-route','مسار واضح','ينتقل العميل من استعراض الخدمة إلى التسجيل ثم الطلب دون تعقيد.'],['fa-wand-magic-sparkles','تجربة جذابة','ألوان، حركة، بطاقات، وصور متجاوبة لتحسين الانطباع الأول.'],['fa-headset','متابعة مباشرة','إيميل وواتساب في كل نقاط التواصل المهمة داخل المنصة.']];
+const specialtyImages={
+'الطب':'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=80','الهندسة':'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&q=80','العلوم':'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&q=80','الاجتماعية':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=80','الإنسانية':'https://images.unsplash.com/photo-1491841573634-28140fc7ced7?w=400&q=80','الإدارة':'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&q=80','القانون':'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=80'};
+const specialties=[['الطب',['الصحة العامة','التمريض','الصيدلة','المختبرات','طب الأسنان']],['الهندسة',['مدني','معماري','كهرباء','ميكانيك','برمجيات']],['العلوم',['كيمياء','فيزياء','أحياء','رياضيات','بيئة']],['الاجتماعية',['علم نفس','اجتماع','تربية','إعلام','خدمة اجتماعية']],['الإنسانية',['لغة عربية','تاريخ','فلسفة','آداب','ترجمة']],['الإدارة',['إدارة أعمال','محاسبة','تسويق','تمويل','اقتصاد']],['القانون',['قانون عام','قانون خاص','جنائي','دولي','تجاري']]];
+const serviceImgs=[['الرسائل الجامعية','https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80'],['النشر العلمي','https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=600&q=80'],['الترجمة','https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80'],['التحليل الإحصائي','https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80'],['فحص الاقتباس','https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80'],['مشاريع التخرج','https://images.unsplash.com/photo-1523050854058-8df90910b683?w=600&q=80']];
+const sections=[
+{id:'masters',title:'رسائل الماجستير والدكتوراه',icon:'fa-user-graduate',grad:'linear-gradient(135deg,#1E3A5F,#2563EB)',desc:'خدمات متدرجة من اختيار الفكرة إلى المناقشة النهائية.',items:['اقتراح عنوان بحثي','كتابة بروبوزل','توفير مراجع ومصادر','تدقيق إملائي ولغوي','إعادة تنسيق حسب الدليل','كتابة فصل من الرسالة','إشراف كامل حتى التسليم','تحليل بيانات الرسالة','إعداد عرض المناقشة']},
+{id:'graduation-notes',title:'مذكرات التخرج',icon:'fa-book-open',grad:'linear-gradient(135deg,#065F46,#10B981)',desc:'مساعدة عملية ومنظمة لطلاب البكالوريوس والليسانس.',items:['اقتراح موضوع مذكرة','إعداد خطة البحث','جمع مراجع حديثة','كتابة الإطار النظري','تنسيق نهائي للمذكرة','إعداد عرض المناقشة']},
+{id:'graduation-projects',title:'مشاريع التخرج',icon:'fa-diagram-project',grad:'linear-gradient(135deg,#4C1D95,#7C3AED)',desc:'من الفكرة إلى النموذج النهائي والتقرير والعرض.',items:['اقتراح فكرة مشروع','تحليل المتطلبات','تنفيذ نموذج أولي','كتابة تقرير المشروع','إعداد العرض والشرح']},
+{id:'papers',title:'الأوراق البحثية والمقالات',icon:'fa-file-lines',grad:'linear-gradient(135deg,#0E7490,#06B6D4)',desc:'خدمات بحثية للباحثين وطلاب الدراسات العليا.',items:['اقتراح عنوان مقال','كتابة ملخص أكاديمي','بناء منهجية الدراسة','تحرير أكاديمي ولغوي','تنسيق المراجع APA/Vancouver']},
+{id:'publishing',title:'النشر الدولي والمحلي',icon:'fa-newspaper',grad:'linear-gradient(135deg,#1E3A5F,#2563EB)',desc:'خدمات تجهيز ومتابعة النشر العلمي.',items:['اختيار المجلة المناسبة','فحص شروط المجلة','تنسيق المقال حسب القالب','فحص الاقتباس وإعادة الصياغة','متابعة الرد على المحكمين'],publishing:true},
+{id:'translation',title:'الترجمة وفحص الاقتباس',icon:'fa-language',grad:'linear-gradient(135deg,#B45309,#D97706)',desc:'ترجمة أكاديمية وفحص تشابه مع تحسين الصياغة.',items:['ترجمة عربية إنجليزية','ترجمة إنجليزية عربية','تدقيق لغوي أكاديمي','فحص نسبة الاقتباس','إعادة صياغة احترافية']},
+{id:'statistics',title:'التحليل الإحصائي',icon:'fa-chart-pie',grad:'linear-gradient(135deg,#831843,#BE185D)',desc:'تحليل كمي ونوعي وتقارير نتائج قابلة للعرض.',items:['تصميم الاستبيان','إدخال وتنظيف البيانات','تحليل SPSS','تحليل R / Python','اختبارات الفرضيات','كتابة فصل النتائج']},
+{id:'programming',title:'البرمجة والتطوير',icon:'fa-code',grad:'linear-gradient(135deg,#1E293B,#334155)',desc:'حلول برمجية تعليمية وبحثية ومشاريع تخرج.',items:['إنشاء مواقع ويب','تصميم واجهات UI','أنظمة إدارة','تطبيقات موبايل','مشاريع Python','مشاريع MATLAB','قواعد بيانات ولوحات تحكم']}
+];
+const journalLogos=['https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Scopus_logo.svg/320px-Scopus_logo.svg.png','https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Clarivate.svg/320px-Clarivate.svg.png','https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/US-NLM-PubMed-Logo.svg/320px-US-NLM-PubMed-Logo.svg.png','https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/DOI_logo.svg/320px-DOI_logo.svg.png','https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/ORCID_iD.svg/320px-ORCID_iD.svg.png','https://www.turnitin.com/img/turnitin-logo.svg'];
+const intlJournals=Array.from({length:15},(_,i)=>({name:['Global Research Journal','International Academic Review','Science & Society Review','Engineering Research Letters','Medical Studies Journal'][i%5]+' '+(i+1),issn:`24${10+i}-99${20+i}`,logo:journalLogos[i%journalLogos.length]}));
+const localJournals={
+'الجزائر':['مجلة العلوم الإنسانية الجزائرية','مجلة الباحث الاقتصادي','مجلة دراسات قانونية','مجلة التربية والعلوم','مجلة الهندسة التطبيقية'],
+'العراق':['مجلة جامعة بغداد','مجلة العلوم العراقية','مجلة القانون المقارن','مجلة الهندسة والتقنية','مجلة الإدارة والاقتصاد'],
+'الأردن':['المجلة الأردنية للعلوم','دراسات الجامعة الأردنية','مجلة البلقاء للبحوث','مجلة القانون الأردنية','مجلة الأعمال الأردنية'],
+'ليبيا':['مجلة الجامعات الليبية','المجلة الليبية للعلوم','مجلة الدراسات الإنسانية','مجلة القانون الليبية','مجلة الهندسة الليبية'],
+'المغرب':['المجلة المغربية للبحث','مجلة العلوم القانونية','مجلة الاقتصاد المغربي','مجلة الآداب والعلوم','مجلة الهندسة المغربية']};
+const expertMajors=['الطب','الهندسة','العلوم','الاجتماعية','الإنسانية','الإدارة','القانون'];
+const countries=['السعودية','المغرب','الجزائر','العراق','الأردن','ليبيا','بريطانيا','أمريكا','فرنسا','ألمانيا','إسبانيا','إيطاليا','اليابان'];
+const ranks=['ماسي','ذهبي','فضي','برونزي'];
+const experts=[]; expertMajors.forEach((m,mi)=>{for(let i=1;i<=6;i++){experts.push({name:['د. سارة المنصور','أ.د. كريم العلي','د. مريم بن يوسف','د. جون ميلر','د. ليلى الهاشمي','د. ماركو روسي'][(i-1)%6],title:['أستاذ مشارك','محكم مجلات','خبير منهجية','مستشار بحثي','أستاذ مساعد','خبير تحليل'][i-1],major:m,country:countries[(mi*2+i)%countries.length],rating:(4.6+(i%4)*.1).toFixed(1),projects:35+mi*8+i*7,years:5+i+mi,rank:ranks[(i+mi)%4],bio:`خبرة في ${m}، مراجعة أكاديمية، منهجية بحث، ومتابعة مشاريع طلابية وبحثية.`})}});
+const portfolio=['بحث PDF عن الإدارة الاستراتيجية','رسالة ماجستير في القانون','رسالة دكتوراه في التربية','مذكرة تخرج في المحاسبة','عرض تقديمي لمناقشة رسالة','مقال علمي في الطب','بحث PDF في الهندسة','رسالة ماجستير في علم النفس','مذكرة تخرج في الإعلام','عرض PPT لمشروع برمجي','مقال مراجعة أدبية','بحث في الاقتصاد','رسالة دكتوراه في العلوم','عرض مؤتمر علمي','مذكرة تخرج قانونية','بحث في الذكاء الاصطناعي'];
+const templates=['قالب LaTeX رسالة ماجستير','قالب Word رسالة جامعية','قالب LaTeX ورقة بحثية','قالب Word مقال علمي','قالب عرض PowerPoint','قالب عرض مناقشة','قالب Cover Letter','قالب استبيان','قالب خطة بحث','قالب سيرة ذاتية أكاديمية','قالب تقرير مشروع تخرج','قالب ملخص بحثي'];
+function renderHome(){
+ if(!$('#sidebarLinks')) return;
+ $('#sidebarLinks').innerHTML=nav.map(n=>`<a href="#${n[0]}" class="side-link"><i class="fa-solid ${n[2]}"></i>${n[1]}</a>`).join('');
+ $('#featuresGrid').innerHTML=features.map((f,i)=>`<article class="feature-card" data-aos="fade-up" data-aos-delay="${i*70}"><div class="card-icon"><i class="fa-solid ${f[0]}"></i></div><h3>${f[1]}</h3><p>${f[2]}</p></article>`).join('');
+ $('#specialtiesGrid').innerHTML=specialties.map((s,i)=>`<article class="specialty-card" data-aos="fade-up" data-aos-delay="${i*60}"><div class="specialty-img"><img loading="lazy" src="${specialtyImages[s[0]]}" onerror="iconFallback(this)" alt="${s[0]}"></div><div class="specialty-body"><h3>${s[0]}</h3><p>خدمات بحثية وتطبيقية حسب الفروع الدقيقة.</p><div class="chips">${s[1].map(x=>`<span>${x}</span>`).join('')}</div></div></article>`).join('');
+ $('#serviceHighlightGrid').innerHTML=serviceImgs.map((s,i)=>`<article class="service-highlight" data-aos="fade-up" data-aos-delay="${i*60}"><div class="highlight-img"><img loading="lazy" src="${s[1]}" onerror="iconFallback(this)" alt="${s[0]}"></div><div class="body"><h3>${s[0]}</h3><p>خدمة منظمة ومهيأة حسب متطلبات الطالب أو الباحث.</p><button class="order-btn" data-service="${s[0]}">اطلب الخدمة</button></div></article>`).join('');
+ $('#serviceSections').innerHTML=sections.map(sec=>renderServiceSection(sec)).join('');
+ const filter=$('#expertFilter'); filter.innerHTML='<option value="all">كل التخصصات</option>'+expertMajors.map(m=>`<option value="${m}">${m}</option>`).join(''); renderExperts();
+ $('#portfolioGrid').innerHTML=portfolio.map((x,i)=>`<article class="work-card" data-aos="fade-up"><div class="file-icon ${x.includes('عرض')?'ppt':''}"><i class="fa-solid ${x.includes('عرض')?'fa-file-powerpoint':'fa-file-pdf'}"></i></div><h3>${x}</h3><p class="muted">نموذج تعليمي قابل للاستبدال من ملفاتك الخاصة.</p><button class="download-btn" data-download="${x}"><i class="fa-solid fa-download"></i> تحميل</button></article>`).join('');
+ $('#templatesGrid').innerHTML=templates.map((x,i)=>`<article class="template-card" data-aos="fade-up"><div class="file-icon ${x.includes('عرض')?'ppt':''}"><i class="fa-solid ${x.includes('عرض')?'fa-file-powerpoint':'fa-file-word'}"></i></div><h3>${x}</h3><p class="muted">قالب جاهز للاستخدام والتعديل.</p><button class="download-btn" data-download="${x}"><i class="fa-solid fa-download"></i> تحميل</button></article>`).join('');
+ bindDynamicButtons(); initParticles(); if(window.AOS) AOS.init({duration:750,once:true,offset:60});
 }
-
-// ═══════════════ HEADER SCROLL ═══════════════
-function initHeaderScroll() {
-    const header = document.getElementById('publicHeader');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
+function renderServiceSection(sec){let html=`<section class="service-section" id="${sec.id}"><div class="section-banner" style="background:${sec.grad}" data-aos="fade-up"><i class="fa-solid ${sec.icon}"></i><div><h2>${sec.title}</h2><p>${sec.desc}</p></div></div><div class="services-grid">${sec.items.map((it,i)=>`<article class="service-card" data-aos="fade-up" data-aos-delay="${(i%3)*70}"><div class="card-icon"><i class="fa-solid ${sec.icon}"></i></div><h3>${it}</h3><p>نموذج طلب مخصص لهذه الخدمة مع حقول واضحة وتفاصيل قابلة للإرسال عبر الإيميل.</p><button class="order-btn" data-service="${it}">اطلب الآن</button></article>`).join('')}</div>`; if(sec.publishing) html+=renderPublishing(); return html+'</section>';}
+function renderPublishing(){return `<div class="journals-wrap"><h3 class="sub-title"><i class="fa-solid fa-globe"></i> مجلات دولية مقترحة</h3><div class="journals-grid">${intlJournals.map(j=>`<article class="journal-card"><div class="journal-logo"><img loading="lazy" src="${j.logo}" onerror="iconFallback(this)" alt="${j.name}"></div><h4>${j.name}</h4><p>ISSN: ${j.issn}</p></article>`).join('')}</div><div class="country-block"><h3 class="sub-title"><i class="fa-solid fa-map-location-dot"></i> مجلات محلية حسب الدولة</h3><div class="country-tabs">${Object.keys(localJournals).map((c,i)=>`<button class="country-tab ${i===0?'active':''}" data-country="${c}">${c}</button>`).join('')}</div><div class="journals-grid" id="localJournalsGrid"></div></div></div>`}
+function renderLocalJournals(country='الجزائر'){const g=$('#localJournalsGrid'); if(g) g.innerHTML=localJournals[country].map((n,i)=>`<article class="journal-card"><div class="journal-logo"><img loading="lazy" src="${journalLogos[i%journalLogos.length]}" onerror="iconFallback(this)" alt="${n}"></div><h4>${n}</h4><p>ISSN: ${2300+i}-${4500+i}</p></article>`).join('');}
+function renderExperts(){const q=($('#expertSearch')?.value||'').trim().toLowerCase();const m=$('#expertFilter')?.value||'all';const data=experts.filter(e=>(m==='all'||e.major===m)&&[e.name,e.title,e.major,e.country,e.bio].join(' ').toLowerCase().includes(q));$('#expertsGrid').innerHTML=data.map(e=>`<article class="expert-card" data-aos="fade-up"><div class="expert-top"><div class="avatar">${e.name.split(' ').pop().slice(0,1)}</div><div><h3>${e.name}</h3><p>${e.title} - ${e.major} - ${e.country}</p><span class="badge ${e.rank}">${e.rank}</span></div></div><div class="expert-meta"><span><i class="fa-solid fa-star"></i> ${e.rating}</span><span>${e.projects} مشروع</span><span>${e.years} سنوات</span></div><p>${e.bio}</p></article>`).join('')||'<p class="muted">لا توجد نتائج.</p>';}
+function bindDynamicButtons(){
+ $$('.order-btn').forEach(btn=>btn.addEventListener('click',()=>openOrder(btn.dataset.service||'خدمة أكاديمية')));
+ $$('.download-btn').forEach(btn=>btn.addEventListener('click',()=>{const title=btn.dataset.download;const blob=new Blob([`AcademiaHub\n${title}\nنموذج تجريبي قابل للاستبدال بملف حقيقي داخل المنصة.`],{type:'text/plain'}); const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=title.replace(/\s+/g,'_')+'.txt';a.click();URL.revokeObjectURL(a.href);}));
+ $$('.country-tab').forEach(b=>b.addEventListener('click',()=>{$$('.country-tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderLocalJournals(b.dataset.country)})); renderLocalJournals();
+ $('#expertSearch')?.addEventListener('input',renderExperts); $('#expertFilter')?.addEventListener('change',renderExperts);
 }
-
-// ═══════════════ AOS ═══════════════
-function initAOS() {
-    if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 80,
-            easing: 'ease-out-cubic'
-        });
-    }
+function openOrder(service){const user=JSON.parse(localStorage.getItem('ah_user')||'null'); if(!user){openAuth('register'); $('#authNote').textContent='سجّل أولاً حتى تتمكن من طلب الخدمة: '+service; sessionStorage.setItem('pendingService',service); return;} $('#orderTitle').textContent='طلب خدمة: '+service; $('#orderForm').dataset.service=service; const f=$('#orderForm'); if(f){f.name.value=user.name||'';f.email.value=user.email||'';f.major.value=user.major||'';f.level.value=user.level||'';} openModal('#orderModal');}
+function openModal(sel){$(sel)?.classList.add('active');$(sel)?.setAttribute('aria-hidden','false')} function closeModal(sel){$(sel)?.classList.remove('active');$(sel)?.setAttribute('aria-hidden','true')}
+function openAuth(tab='login'){openModal('#authModal'); switchAuth(tab)}
+function switchAuth(tab){$$('.auth-tab').forEach(b=>b.classList.toggle('active',b.dataset.authTab===tab)); $$('.auth-form').forEach(f=>f.classList.remove('active')); $('#'+(tab==='register'?'registerForm':'loginForm'))?.classList.add('active');}
+function setupCommon(){
+ $('#openSidebar')?.addEventListener('click',()=>{$('#sidebar').classList.add('active');$('#sidebarOverlay').classList.add('active')});
+ function closeSide(){$('#sidebar')?.classList.remove('active');$('#sidebarOverlay')?.classList.remove('active')} $('#closeSidebar')?.addEventListener('click',closeSide); $('#sidebarOverlay')?.addEventListener('click',closeSide); $$('.side-link').forEach(a=>a.addEventListener('click',closeSide));
+ $$('[data-open-auth]').forEach(b=>b.addEventListener('click',()=>openAuth(b.dataset.openAuth))); $('#authClose')?.addEventListener('click',()=>closeModal('#authModal')); $('#orderClose')?.addEventListener('click',()=>closeModal('#orderModal'));
+ $$('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('active')})); $$('.auth-tab').forEach(b=>b.addEventListener('click',()=>switchAuth(b.dataset.authTab)));
+ $('#registerForm')?.addEventListener('submit',e=>{e.preventDefault(); const u={name:$('#regName').value,email:$('#regEmail').value,level:$('#regLevel').value,major:$('#regMajor').value,password:$('#regPassword').value,createdAt:new Date().toISOString()}; localStorage.setItem('ah_user',JSON.stringify(u)); const pending=sessionStorage.getItem('pendingService'); if(pending){sessionStorage.removeItem('pendingService'); location.href='dashboard.html';}else{location.href='dashboard.html';}});
+ $('#loginForm')?.addEventListener('submit',e=>{e.preventDefault(); const u=JSON.parse(localStorage.getItem('ah_user')||'null'); if(!u){$('#authNote').textContent='لا يوجد حساب محفوظ. أنشئ حساباً جديداً أولاً.'; $('#authNote').style.animation='shake .45s'; return;} location.href='dashboard.html';});
+ $('#orderForm')?.addEventListener('submit',e=>{e.preventDefault(); submitOrder(new FormData(e.target), e.target.dataset.service||'خدمة أكاديمية'); closeModal('#orderModal');});
 }
-
-// ═══════════════ HERO PARTICLES ═══════════════
-function initHeroParticles() {
-    const container = document.getElementById('heroParticles');
-    if (!container) return;
-    for (let i = 0; i < 40; i++) {
-        const particle = document.createElement('div');
-        const size = Math.random() * 4 + 2;
-        particle.style.cssText = `
-            position: absolute;
-            width: ${size}px;
-            height: ${size}px;
-            background: rgba(255,255,255,${Math.random() * 0.4 + 0.1});
-            border-radius: 50%;
-            top: ${Math.random() * 100}%;
-            left: ${Math.random() * 100}%;
-            animation: floatParticle ${Math.random() * 8 + 6}s linear infinite;
-            animation-delay: ${Math.random() * 6}s;
-        `;
-        container.appendChild(particle);
-    }
-    const styleEl = document.createElement('style');
-    styleEl.textContent = `
-        @keyframes floatParticle {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(${Math.random() * 100 - 50}px); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(styleEl);
-}
-
-// ═══════════════ SIDEBAR ═══════════════
-function initSidebar() {
-    const sidebar = document.getElementById('publicSidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    const closeBtn = document.getElementById('sidebarClose');
-    
-    // Open sidebar
-    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-        sidebar.classList.add('open');
-        STATE.sidebarOpen = true;
-    });
-    
-    // Close sidebar
-    function closeSidebar() {
-        sidebar.classList.remove('open');
-        STATE.sidebarOpen = false;
-    }
-    
-    closeBtn.addEventListener('click', closeSidebar);
-    overlay.addEventListener('click', closeSidebar);
-    
-    // Close on escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && STATE.sidebarOpen) closeSidebar();
-    });
-    
-    // Close on menu item click
-    sidebar.querySelectorAll('.sidebar-menu-item[data-section]').forEach(item => {
-        item.addEventListener('click', () => {
-            closeSidebar();
-            const section = item.dataset.section;
-            navigateToSection(section);
-        });
-    });
-}
-
-// ═══════════════ MOBILE MENU ═══════════════
-function initMobileMenu() {
-    // Already handled in sidebar init
-}
-
-// ═══════════════ SECTION NAVIGATION ═══════════════
-function initSectionNavigation() {
-    // Scroll-based section detection
-    const sections = document.querySelectorAll('.pub-section');
-    const menuItems = document.querySelectorAll('.sidebar-menu-item[data-section]');
-    
-    if (sections.length === 0) return;
-    
-    // Use Intersection Observer for better performance
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const sectionId = entry.target.id.replace('section-', '');
-                STATE.currentSection = sectionId;
-                updateActiveMenuItem(sectionId);
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    sections.forEach(section => {
-        if (section.id !== 'section-home') {
-            observer.observe(section);
-        }
-    });
-}
-
-function updateActiveMenuItem(sectionId) {
-    document.querySelectorAll('.sidebar-menu-item[data-section]').forEach(item => {
-        item.classList.toggle('active', item.dataset.section === sectionId);
-    });
-}
-
-function navigateToSection(section) {
-    STATE.currentSection = section;
-    updateActiveMenuItem(section);
-    
-    const targetSection = document.getElementById('section-' + section);
-    if (targetSection) {
-        // Show section
-        document.querySelectorAll('.pub-section').forEach(s => s.classList.remove('active'));
-        targetSection.classList.add('active');
-        
-        // Scroll to section
-        setTimeout(() => {
-            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-    } else if (section === 'home') {
-        document.querySelectorAll('.pub-section').forEach(s => s.classList.remove('active'));
-        document.getElementById('section-home').classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-}
-
-// ═══════════════ SIDEBAR SEARCH ═══════════════
-function initSidebarSearch() {
-    const searchInput = document.getElementById('sidebarSearch');
-    if (!searchInput) return;
-    
-    searchInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase().trim();
-        const menuItems = document.querySelectorAll('.sidebar-menu-item[data-section]');
-        
-        menuItems.forEach(item => {
-            const text = item.textContent.toLowerCase();
-            if (query === '' || text.includes(query)) {
-                item.style.display = 'flex';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    });
-}
-
-// ═══════════════ SMOOTH SCROLL ═══════════════
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href === '#') return;
-            const target = document.querySelector(href);
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-}
-
-// ═══════════════ SPECS GRID ═══════════════
-function loadSpecsGrid() {
-    const grid = document.getElementById('specsGridMain');
-    if (!grid) return;
-    
-    grid.innerHTML = Object.entries(SPECS).map(([key, spec]) => `
-        <div class="spec-card-main" onclick="scrollToSection('experts')">
-            <img src="${spec.img}" alt="${key}" loading="lazy">
-            <div class="spec-body">
-                <h4><i class="fa-solid ${spec.icon}" style="color:${spec.color}"></i> ${key}</h4>
-                <div class="branches">
-                    ${spec.branches.map(b => `<span>${b}</span>`).join('')}
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-// ═══════════════ ALL SERVICE SECTIONS ═══════════════
-function loadAllServiceSections() {
-    loadServiceSection('thesis', 'thesisServicesGrid');
-    loadServiceSection('memo', 'memoServicesGrid');
-    loadServiceSection('graduation', 'gradServicesGrid');
-    loadServiceSection('papers', 'papersServicesGrid');
-    loadServiceSection('publishing', 'pubServicesGrid');
-    loadServiceSection('translation', 'transServicesGrid');
-    loadServiceSection('statistics', 'statsServicesGrid');
-    loadServiceSection('programming', 'progServicesGrid');
-}
-
-function loadServiceSection(sectionKey, gridId) {
-    const grid = document.getElementById(gridId);
-    if (!grid) return;
-    const services = SERVICES[sectionKey];
-    if (!services) return;
-    
-    grid.innerHTML = services.items.map((item, index) => `
-        <div class="service-item-card" data-aos="fade-up" data-aos-delay="${index * 50}" onclick="scrollToCTA()">
-            <div class="service-item-icon" style="background:${item.color}">
-                <i class="fa-solid ${item.icon}"></i>
-            </div>
-            <div class="service-item-info">
-                <h4>${item.title}</h4>
-                <p>${item.desc}</p>
-            </div>
-        </div>
-    `).join('');
-}
-
-// ═══════════════ JOURNALS SECTION ═══════════════
-function loadJournalsSection() {
-    const container = document.getElementById('journalsWorldSection');
-    if (!container) return;
-    
-    let html = '<h3 class="section-title" style="margin-bottom:24px"><i class="fa-solid fa-globe"></i> قائمة المجلات العلمية</h3>';
-    
-    // International journals
-    html += buildJournalsBlock(JOURNALS.international);
-    
-    // Local journals by country
-    const countries = ['algeria', 'iraq', 'jordan', 'libya', 'morocco'];
-    const countryNames = { algeria: 'الجزائر', iraq: 'العراق', jordan: 'الأردن', libya: 'ليبيا', morocco: 'المغرب' };
-    
-    countries.forEach(country => {
-        html += buildJournalsBlock(JOURNALS[country]);
-    });
-    
-    container.innerHTML = html;
-}
-
-function buildJournalsBlock(countryData) {
-    return `
-        <div class="journals-country-block">
-            <h4>${countryData.title}</h4>
-            <div class="journals-grid">
-                ${countryData.journals.map(j => `
-                    <div class="journal-card">
-                        <div class="journal-card-logo">
-                            <img src="${j.logo}" alt="${j.name}" loading="lazy" onerror="this.parentElement.innerHTML='<i class=fa-solid fa-book-open style=font-size:1.5rem;color:var(--p)></i>'">
-                        </div>
-                        <div class="journal-card-info">
-                            <h5>${j.name}</h5>
-                            <span>ISSN: ${j.issn} | ${j.spec || ''} ${j.q ? '| ' + j.q : ''}</span>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-}
-
-// ═══════════════ EXPERTS SECTION ═══════════════
-function loadExpertsSection() {
-    const grid = document.getElementById('expertsGridFull');
-    const filterSelect = document.getElementById('expertFilterCategory');
-    const searchInput = document.getElementById('expertSearchInput');
-    if (!grid) return;
-    
-    // Populate filter
-    const categories = ['all', ...new Set(EXPERTS.map(e => e.c))];
-    filterSelect.innerHTML = categories.map(c => 
-        `<option value="${c}">${c === 'all' ? 'جميع التخصصات' : c}</option>`
-    ).join('');
-    
-    function renderExperts(filter = 'all', search = '') {
-        let experts = EXPERTS;
-        if (filter !== 'all') experts = experts.filter(e => e.c === filter);
-        if (search) experts = experts.filter(e => 
-            e.n.toLowerCase().includes(search) || 
-            e.s.toLowerCase().includes(search) ||
-            e.country.includes(search)
-        );
-        
-        const badgeLabels = { diamond: '💎 خبير ماسي', gold: '🥇 خبير ذهبي', silver: '🥈 خبير فضي', bronze: '🥉 خبير برونزي' };
-        
-        grid.innerHTML = experts.map(e => `
-            <div class="expert-full-card" data-aos="fade-up">
-                <span class="expert-badge-full badge-${e.b}">${badgeLabels[e.b]}</span>
-                <div class="expert-avatar-full"><i class="fa-solid fa-user-tie"></i></div>
-                <h4>${e.t} ${e.n}</h4>
-                <p class="expert-spec">${e.s}</p>
-                <span style="font-size:.8rem">${e.country}</span>
-                <div class="expert-stars">${'★'.repeat(Math.floor(e.r))}${e.r % 1 >= 0.5 ? '½' : ''} <b>${e.r}</b></div>
-                <p class="expert-bio">${e.bio}</p>
-                <div class="expert-stats">
-                    <div><b>${e.p}</b><span>مشروع</span></div>
-                    <div><b>${e.exp}</b><span>خبرة</span></div>
-                    <div><b>${Math.round(e.r * 20)}%</b><span>رضا</span></div>
-                </div>
-                <button class="hero-btn primary" style="margin-top:10px;padding:10px 20px;font-size:.85rem" onclick="scrollToCTA()">
-                    <i class="fa-solid fa-paper-plane"></i> طلب خدمة
-                </button>
-            </div>
-        `).join('');
-    }
-    
-    filterSelect.addEventListener('change', () => renderExperts(filterSelect.value, searchInput.value));
-    searchInput.addEventListener('input', () => renderExperts(filterSelect.value, searchInput.value.toLowerCase()));
-    
-    renderExperts();
-}
-
-// ═══════════════ PORTFOLIO SECTION ═══════════════
-function loadPortfolioSection() {
-    const grid = document.getElementById('portfolioGrid');
-    if (!grid) return;
-    
-    grid.innerHTML = PORTFOLIO.map((item, index) => `
-        <div class="portfolio-card" data-aos="fade-up" data-aos-delay="${index * 30}">
-            <div class="portfolio-card-header">
-                <i class="fa-solid ${item.icon}" style="color:${item.color};font-size:2rem"></i>
-                <div>
-                    <span style="background:${item.color}20;color:${item.color};padding:3px 12px;border-radius:20px;font-size:.7rem;font-weight:700">${item.cat}</span>
-                </div>
-            </div>
-            <div class="portfolio-card-body">
-                <h5>${item.title}</h5>
-                <p>${item.desc}</p>
-            </div>
-            <div class="portfolio-card-footer">
-                <span style="font-size:.7rem;color:var(--g5)">${item.type.toUpperCase()} - ${item.file}</span>
-                <button class="portfolio-dl-btn" onclick="downloadPortfolioFile('${item.file}', '${item.title}')">
-                    <i class="fa-solid fa-download"></i> تحميل
-                </button>
-            </div>
-        </div>
-    `).join('');
-}
-
-function downloadPortfolioFile(filename, title) {
-    // في النسخة الحقيقية، هذه الملفات ستكون موجودة في مجلد downloads
-    alert('📥 جارٍ تحميل: ' + title + '\n\nالملف: ' + filename + '\n\nفي النسخة النهائية، سيتم تحميل الملف مباشرة من الخادم.');
-}
-
-// ═══════════════ LIBRARY SECTION ═══════════════
-function loadLibrarySection() {
-    const grid = document.getElementById('libraryGridFull');
-    if (!grid) return;
-    
-    const colorMap = { blue: '#2563EB', purple: '#7C3AED', orange: '#F97316', green: '#10B981' };
-    
-    grid.innerHTML = LIBRARY.map((item, index) => `
-        <div class="lib-full-card" data-aos="fade-up" data-aos-delay="${index * 40}">
-            <div class="lib-full-icon" style="background:${colorMap[item.clr]}15;color:${colorMap[item.clr]}">
-                <i class="fa-solid ${item.icon}"></i>
-            </div>
-            <span style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:.7rem;font-weight:600;background:var(--g1);margin-bottom:8px">${item.f}</span>
-            <h5>${item.t}</h5>
-            <p>${item.d}</p>
-            <div class="lib-meta">
-                <button class="lib-dl-full-btn" onclick="downloadLibraryTemplate('${item.t}')">
-                    <i class="fa-solid fa-download"></i> تحميل
-                </button>
-                <span style="font-size:.75rem;color:var(--g4)"><i class="fa-solid fa-download"></i> ${item.dw.toLocaleString()}</span>
-            </div>
-        </div>
-    `).join('');
-}
-
-function downloadLibraryTemplate(title) {
-    alert('📥 جارٍ تحميل: ' + title + '\n\nسيتم تحميل القالب مباشرة.');
-}
-
-// ═══════════════ CTA / SCROLL TO CTA ═══════════════
-function scrollToCTA() {
-    const ctaSection = document.getElementById('ctaSection');
-    if (ctaSection) {
-        ctaSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Highlight effect
-        ctaSection.style.transition = 'all 0.5s ease';
-        ctaSection.querySelector('.cta-content').style.transform = 'scale(1.03)';
-        setTimeout(() => {
-            ctaSection.querySelector('.cta-content').style.transform = 'scale(1)';
-        }, 500);
-    }
-}
-
-function scrollToSection(section) {
-    const target = document.getElementById('section-' + section);
-    if (target) {
-        document.querySelectorAll('.pub-section').forEach(s => s.classList.remove('active'));
-        target.classList.add('active');
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        STATE.currentSection = section;
-        updateActiveMenuItem(section);
-    }
-}
-
-// ═══════════════ AUTH MODAL ═══════════════
-function openAuthModal(mode) {
-    const modal = document.getElementById('authModal');
-    const content = document.getElementById('authModalContent');
-    if (!modal || !content) return;
-    
-    const isLogin = mode === 'login';
-    
-    content.innerHTML = `
-        <div style="text-align:center;margin-bottom:24px">
-            <i class="fa-solid fa-graduation-cap" style="font-size:2.5rem;color:var(--p);display:block;margin-bottom:12px"></i>
-            <h3 style="font-family:var(--ffd);font-size:1.3rem">${isLogin ? 'تسجيل الدخول' : 'إنشاء حساب جديد'}</h3>
-            <p style="color:var(--g5);font-size:.85rem">${isLogin ? 'مرحباً بعودتك!' : 'انضم إلينا وابدأ رحلتك الأكاديمية'}</p>
-        </div>
-        <form id="authForm" style="display:flex;flex-direction:column;gap:12px">
-            ${!isLogin ? `
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-                <div class="fg"><label>الاسم الأول</label><input type="text" required placeholder="الاسم الأول"></div>
-                <div class="fg"><label>الاسم الأخير</label><input type="text" required placeholder="الاسم الأخير"></div>
-            </div>
-            ` : ''}
-            <div class="fg"><label>البريد الإلكتروني</label><input type="email" required placeholder="example@email.com" id="authEmail"></div>
-            ${!isLogin ? `
-            <div class="fg"><label>المستوى الأكاديمي</label><select required><option value="">اختر...</option><option>بكالوريوس</option><option>ماجستير</option><option>دكتوراه</option><option>باحث</option></select></div>
-            <div class="fg"><label>التخصص</label><select required>${Object.keys(SPECS).map(s => `<option>${s}</option>`).join('')}</select></div>
-            ` : ''}
-            <div class="fg"><label>كلمة المرور</label><input type="password" required placeholder="********" id="authPassword" minlength="8"></div>
-            ${!isLogin ? '<div class="fg"><label>تأكيد كلمة المرور</label><input type="password" required placeholder="********" id="authConfirm"></div>' : ''}
-            <button type="submit" class="cta-btn" style="width:100%;justify-content:center;margin-top:8px">
-                <i class="fa-solid fa-${isLogin ? 'right-to-bracket' : 'user-plus'}"></i> ${isLogin ? 'دخول' : 'إنشاء حساب'}
-            </button>
-        </form>
-        <p style="text-align:center;margin-top:14px;font-size:.85rem;color:var(--g5)">
-            ${isLogin ? 'ليس لديك حساب؟' : 'لديك حساب بالفعل؟'}
-            <a href="#" onclick="event.preventDefault();openAuthModal('${isLogin ? 'register' : 'login'}')" style="color:var(--p);font-weight:700">
-                ${isLogin ? 'إنشاء حساب جديد' : 'تسجيل الدخول'}
-            </a>
-        </p>
-        <div id="authMsg" style="text-align:center;margin-top:8px;font-size:.85rem;min-height:20px"></div>
-    `;
-    
-    modal.classList.add('show');
-    
-    // Form submit
-    document.getElementById('authForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const email = document.getElementById('authEmail').value.trim();
-        const password = document.getElementById('authPassword').value;
-        
-        if (!isLogin) {
-            const confirm = document.getElementById('authConfirm').value;
-            if (password !== confirm) {
-                document.getElementById('authMsg').innerHTML = '<span style="color:#EF4444">كلمة المرور غير متطابقة</span>';
-                return;
-            }
-        }
-        
-        if (!email || !password) {
-            document.getElementById('authMsg').innerHTML = '<span style="color:#EF4444">يرجى ملء جميع الحقول</span>';
-            return;
-        }
-        
-        // Save user
-        const user = {
-            email: email,
-            name: email.split('@')[0],
-            fullName: email.split('@')[0],
-            firstName: email.split('@')[0],
-            isLoggedIn: true,
-            academicLevel: 'researcher',
-            loginTime: new Date().toISOString()
-        };
-        localStorage.setItem('ahu', JSON.stringify(user));
-        
-        document.getElementById('authMsg').innerHTML = '<span style="color:#10B981">✅ تم ' + (isLogin ? 'تسجيل الدخول' : 'إنشاء الحساب') + ' بنجاح! جارٍ تحويلك...</span>';
-        
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1000);
-    });
-}
-
-function closeAuthModal() {
-    const modal = document.getElementById('authModal');
-    if (modal) modal.classList.remove('show');
-}
-
-// Close modal on overlay click
-document.addEventListener('click', function(e) {
-    const modal = document.getElementById('authModal');
-    if (e.target === modal) closeAuthModal();
-});
-
-// ═══════════════ CHECK EXISTING SESSION ═══════════════
-function checkExistingSession() {
-    const userData = localStorage.getItem('ahu');
-    if (userData) {
-        try {
-            const user = JSON.parse(userData);
-            if (user.isLoggedIn) {
-                STATE.user = user;
-                // User is logged in, could show different UI
-                updateHeaderForLoggedInUser(user);
-            }
-        } catch(e) {}
-    }
-}
-
-function updateHeaderForLoggedInUser(user) {
-    const actionsDiv = document.querySelector('.header-actions');
-    if (actionsDiv && user) {
-        actionsDiv.innerHTML = `
-            <span style="color:var(--g3);font-size:.85rem;margin-left:8px">${user.name}</span>
-            <a href="dashboard.html" class="btn-auth-header btn-auth-primary">
-                <i class="fa-solid fa-th-large"></i> لوحة التحكم
-            </a>
-            <button class="btn-auth-header" onclick="logout()">
-                <i class="fa-solid fa-right-from-bracket"></i> خروج
-            </button>
-        `;
-    }
-}
-
-function logout() {
-    localStorage.removeItem('ahu');
-    STATE.user = null;
-    location.reload();
-}
-
-// ═══════════════ WHATSAPP FLOAT ═══════════════
-function initWhatsAppFloat() {
-    const waBtn = document.querySelector('.wa-float');
-    if (waBtn) {
-        // Add ripple effect on click
-        waBtn.addEventListener('click', function(e) {
-            const ripple = document.createElement('span');
-            ripple.style.cssText = `
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                background: rgba(255,255,255,.3);
-                animation: ripple .6s ease-out;
-                top: 0;
-                left: 0;
-            `;
-            this.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 600);
-        });
-    }
-}
-
-// Add ripple keyframe
-const rippleStyle = document.createElement('style');
-rippleStyle.textContent = `
-    @keyframes ripple {
-        from { transform: scale(0); opacity: 1; }
-        to { transform: scale(2); opacity: 0; }
-    }
-`;
-document.head.appendChild(rippleStyle);
-
-// ═══════════════ FOOTER ═══════════════
-function initFooterYear() {
-    const yearEl = document.querySelector('.footer-bottom p');
-    if (yearEl) {
-        const year = new Date().getFullYear();
-        yearEl.textContent = `© ${year} AcademiaHub. جميع الحقوق محفوظة.`;
-    }
-}
-
-// ═══════════════ KEYBOARD SHORTCUTS ═══════════════
-document.addEventListener('keydown', function(e) {
-    // Escape to close modals
-    if (e.key === 'Escape') {
-        closeAuthModal();
-        if (STATE.sidebarOpen) {
-            document.getElementById('publicSidebar').classList.remove('open');
-            STATE.sidebarOpen = false;
-        }
-    }
-    
-    // Ctrl+K for search focus
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        const searchInput = document.getElementById('sidebarSearch');
-        if (searchInput) {
-            document.getElementById('publicSidebar').classList.add('open');
-            STATE.sidebarOpen = true;
-            setTimeout(() => searchInput.focus(), 300);
-        }
-    }
-});
-
-// ═══════════════ GLOBAL FUNCTIONS ═══════════════
-window.openAuthModal = openAuthModal;
-window.closeAuthModal = closeAuthModal;
-window.scrollToCTA = scrollToCTA;
-window.scrollToSection = scrollToSection;
-window.downloadPortfolioFile = downloadPortfolioFile;
-window.downloadLibraryTemplate = downloadLibraryTemplate;
-window.logout = logout;
+function genId(){return 'AH-'+Math.floor(100000+Math.random()*900000)}
+function submitOrder(fd,service){const id=genId(); const now=new Date().toLocaleString('ar'); const data=Object.fromEntries(fd.entries()); const body=`رقم الطلب: ${id}\nالتاريخ والوقت: ${now}\nاسم العميل: ${data.name||''}\nالبريد: ${data.email||''}\nالهاتف: ${data.phone||''}\nنوع الخدمة: ${service||data.service||''}\nالمستوى: ${data.level||''}\nالتخصص: ${data.major||''}\nموعد التسليم: ${data.deadline||''}\n\nتفاصيل الطلب:\n${data.details||''}\n\nملاحظات إضافية:\n${data.notes||''}`; const subject='طلب خدمة جديد - '+id; window.open(`mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,'_blank'); const orders=JSON.parse(localStorage.getItem('ah_orders')||'[]'); orders.unshift({id,service:service||data.service,date:now,details:data.details||'',major:data.major||''}); localStorage.setItem('ah_orders',JSON.stringify(orders)); alert(`✅ تم تقديم طلبك بنجاح\n\n📋 رقم الطلب: ${id}\n📧 سيتم التواصل عبر الإيميل\n📱 رابط الواتساب للمتابعة:\n${WA}`); renderDashboardOrders();}
+function initParticles(){const canvas=$('#particles'); if(!canvas) return; const ctx=canvas.getContext('2d'); let w,h,parts=[]; function resize(){w=canvas.width=canvas.offsetWidth;h=canvas.height=canvas.offsetHeight;parts=Array.from({length:70},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,vx:(Math.random()-.5)*.45,vy:(Math.random()-.5)*.45}))} function draw(){ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(96,165,250,.75)';parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();});requestAnimationFrame(draw)} resize();addEventListener('resize',resize);draw();}
+function setupDashboard(){if(!document.body.classList.contains('dashboard-body')) return; const u=JSON.parse(localStorage.getItem('ah_user')||'null'); if(!u){location.href='index.html';return;} $('#clientName').textContent='مرحباً، '+u.name; $('#clientInfo').textContent=`${u.level} - ${u.major}`; $('#backHome')?.addEventListener('click',()=>location.href='index.html'); $('#logoutBtn')?.addEventListener('click',()=>{localStorage.removeItem('ah_user');location.href='index.html'}); const sel=$('#dashServiceSelect'); if(sel) sel.innerHTML=sections.flatMap(s=>s.items).map(x=>`<option>${x}</option>`).join(''); $('#dashOrderForm')?.addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(e.target); fd.set('name',u.name);fd.set('email',u.email); submitOrder(fd,fd.get('service')); e.target.reset();}); renderDashboardOrders();}
+function renderDashboardOrders(){const box=$('#savedOrders'); if(!box) return; const orders=JSON.parse(localStorage.getItem('ah_orders')||'[]'); $('#ordersCount').textContent=orders.length; box.innerHTML=orders.length?orders.map(o=>`<article class="saved-order"><strong>${o.id}</strong><p>${o.service} - ${o.major}</p><small>${o.date}</small></article>`).join(''):'<p class="muted">لا توجد طلبات محفوظة بعد.</p>';}
+document.addEventListener('DOMContentLoaded',()=>{renderHome();setupCommon();setupDashboard();});
+})();
