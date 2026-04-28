@@ -1,0 +1,11 @@
+{
+    "name": "AcademiaHub",
+    "short_name": "AcademiaHub",
+    "description": "منصة أكاديمية متكاملة للباحثين والطلبة",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2563eb",
+    "dir": "rtl",
+    "lang": "ar"
+}
